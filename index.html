@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      Introduction to three.js
+    </title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="prettify.css">
+    <link href="index.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <script src="modernizr-webgl.js"></script>
+  </head>
+  <body>
+    <div class="top">
+      <div class="container">
+        <div class="top-right">
+          <p>Michael Barry</p>
+          <p>CS525D &middot; Spring 2014</p>
+        </div>
+      </div>
+      <div class='bs-header-after'></div>
+    </div>
+    <div class="marketing">
+      <div class="container">
+        <h1 class="main-heading">three.js <small class="text-muted">native 3D rendering for the browser</small></h1>
+        <p class="lead"><a target="_blank" href="http://threejs.org/">three.js</a> is a JavaScript library designed to simplify 3D rendering in the browser using WebGL.  WebGL has a low-level, imperative JavaScript API which makes it relatively difficult to use on its own compared with a higher-level declarative technology like SVG.  three.js provides a straightforward and concise API that (while still imperative) makes setting up 3D scenes using WebGL much simpler.</p>
+        <p class="lead">WebGL renders scenes to a single <code>&lt;canvas&gt;</code> DOM element that contains the entire visualization on the page, unlike SVG which is composed of a separate DOM element for each element of the visualization.  This means that CSS can not be used to style a WebGL visualization and all style must be set up programatically in JavaScript.</p>
+        <p class="lead">Most modern desktop browsers support WebGL - although as of March 2014, most mobile browsers do not.  When a browser does not support WebGL, three.js's modular architecture allows swapping in an HTML5 canvas renderer.</p>
+        <p class="lead webgl-capable"><span class="label label-success">Your browser supports WebGL</span> all examples will work as intended.</p>
+        <p class="lead not-capable"><span class="label label-danger">Your browser does not support WebGL</span> all WebGL examples will be replaced png or animated gif images. To view examples as they were intended, please <a target="_blank" href="http://browsehappy.com">download a modern browser</a>.</p>
+        <p class="lead">This page explains some of the core concepts behind setting up a scene using three.js and populating it with objects.  It builds up a simple example of a spinning sphere and concludes with links to further examples and documentation.</p>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container featurette">
+        <hr class="featurette-divider">
+        <div class="col-md-7 left">
+          <h2 class="featurette-heading">Installation</h2>
+          <p class="lead">A three.js visualization is just a web page consisting of HTML, CSS, and JavaScript.  Include the three.js script on your page before any scripts that use it.  Find the latest three.js build <a target="_blank" href="http://threejs.org/">here</a>.</p>
+        </div>
+        <div class="col-md-5">
+          <pre class="prettyprint lang-html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+    &lt;style&gt;
+      canvas { width: 100%; height: 100% }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script src="three.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+      // insert code for the three.js visualization here
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container featurette">
+        <hr class="featurette-divider">
+        <div class="col-md-7 pull-right right">
+          <h2 class="featurette-heading">Setting Up the Scene</h2>
+          <p class="lead">Before creating any objects in your visualization, you must first set up the scene, camera, and renderer. The <strong>scene</strong> is a generic container for the visualization which can optionally have "fog" that dims remote objects. The <strong>camera</strong> defines the aspect ratio and field of view as well as near and far clipping distances to avoid rendering objects that should not be visible.  You can also configure the camera's focal length in units that correspond to mm for a 35mm camera.</p>
+          <p class="lead">Finally you need to create a <strong>renderer</strong> that will take the model you build and render it to the screen.  The WebGLRenderer uses hardware-accelerated WebGL.  The CanvasRenderer can be used if the browser does not support WebGL. The renderer provides the canvas DOM element for rendering that must be added to the page to see the visualization.</p>
+        </div>
+        <div class="col-md-5">
+          <pre class="prettyprint lang-js">
+// create the scene
+var scene = new THREE.Scene();
+// create the camera with 45-degree field of view and an aspect ratio that matches the viewport
+var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+// move the camera 10 units back from the origin
+camera.position.z = 10;
+// create the renderer
+var renderer = new THREE.WebGLRenderer();
+// make the renderer fill the viewport
+renderer.setSize(window.innerWidth, window.innerHeight);
+// add the DOM element that the renderer will draw to to the page
+document.body.appendChild(renderer.domElement);
+// set the background color to almost-white
+renderer.setClearColorHex(0xEEEEEE, 1.0);
+renderer.clear();</pre>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container featurette">
+        <hr class="featurette-divider">
+        <div class="col-md-7 left">
+          <h2 class="featurette-heading">Filling and Lighting the Scene</h2>
+          <p class="lead">After setting up the scaffolding for a scene, you can use geometries, materials, and mesh to add objects to it. A <strong>geometry</strong> is the shape of an object.  three.js comes with built-in functions for creating common geometries like a cube, circle, cylinder, plane, ring, sphere, text, etc.  You can also use a geometry loader to load custom geometries from files or load data files and create the geometries from them. A <strong>material</strong> is the image texture, flat color, etc. that is draped over the geometry to produce a solid object. A <strong>mesh</strong> takes a geometry and material and creates the solid object that can be rendered to the screen at a particular location.</p>
+          <p class="lead">Finally, a <strong>light</strong> provides illumination for the objects in the scene, which will otherwise show up as black.</p>
+        </div>
+        <div class="col-md-5">
+          <pre class="prettyprint lang-js">
+// create a solid-grey sphere mesh composed of a geometry with radius 5 and 32 horizontal and vertical segments
+var cube = new THREE.Mesh(
+  new THREE.SphereGeometry(5, 32, 32),
+  new THREE.MeshLambertMaterial({color: 0x888888}));
+scene.add(cube);
+
+// add a spotlight to the scene
+var light = new THREE.SpotLight();
+light.position.set( -10, 20, 16 );
+scene.add(light);
+</pre>
+        </div>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container featurette">
+        <hr class="featurette-divider">
+        <div class="col-md-7 pull-right right">
+          <h2 class="featurette-heading">Rendering the Scene</h2>
+          <p class="lead">Once the scene has been created and populated, you need to explicitly tell the browser to render it.  To render it once simply add <code>renderer.render(scene, animation)</code> to the end of your code.</p>
+        </div>
+        <div class="col-md-5">
+          <div id="staticsphere"></div>
+        </div>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container featurette">
+        <hr class="featurette-divider">
+        <div class="col-md-7 left">
+          <h2 class="featurette-heading">Animation</h2>
+          <p class="lead">To animate a three.js visualization, you must explicitly draw it many times per second.  The recommended way to do this is to use <code>requestAnimationFrame</code> which attempts to invoke a function up to 60 times per second.  In this animation loop you should respond to browser resize events and perform necessary animation calculations.</p>
+          <p class="lead">This snippet starts an animation loop that responds to browser resize events and rotates the camera continuously around the sphere.</p>
+        </div>
+        <div class="col-md-5">
+          <pre class="prettyprint lang-js">
+function animate(t) {
+  // update the aspect ratio and renderer size in case the window was resized
+  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  // spin the camera in a circle
+  camera.position.x = Math.sin(t/500)*10;
+  camera.position.y = 0;
+  camera.position.z = Math.cos(t/500)*10;
+  // point the camera at the origin
+  camera.lookAt(scene.position);
+  // render the scene again
+  renderer.render(scene, camera);
+  // request the next animation frame to render again
+  window.requestAnimationFrame(animate, renderer.domElement);
+};
+animate(new Date().getTime());
+</pre>
+        </div>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container featurette">
+        <hr class="featurette-divider">
+        <div class="col-md-7 pull-right right">
+          <h2 class="featurette-heading">Putting it all together</h2>
+          <p class="lead">The finished product, complete with animation and lighting.</p>
+        </div>
+        <div class="col-md-5">
+          <div id="spinner"></div>
+        </div>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container featurette">
+        <hr class="featurette-divider">
+        <div class="col-md-7 left">
+          <h2 class="featurette-heading">Visualizing Data with three.js</h2>
+          <p class="lead">three.js provides the basic building blocks needed to create 3D data visualizations.  With a little math and perhaps help from a library like <a target="_blank" href="http://d3js.org/">d3.js</a> or <a target="_blank" href="http://underscorejs.org/">underscore</a> you should be able to create any kind of 3D visualization.
+        </div>
+        <div class="col-md-5">
+          <div id="mydataviz">TODO make an example data viz</div>
+        </div>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container">
+        <hr class="featurette-divider">
+        <div class="text-center">
+          <h2 class="featurette-heading">Examples</h2>
+          <br><br>
+        </div>
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <a target="_blank" href="http://metropolitain.io">
+              <img class="img-circle" src="metropolitain.png">
+              <h2>metropolitain.io</h2>
+            </a>
+            <p class="lead">Visualization of the Parisian subway system created by <a target="_blank" href="http://dataveyes.com/">Dataveyes</a>.</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <a target="_blank" href="http://workshop.chromeexperiments.com/globe/">
+              <img class="img-circle" src="populationthumbnail.png">
+              <h2>World Population</h2>
+            </a>
+            <p class="lead">3D visualization of population distribution, created by the Google Data Arts Team.</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <a target="_blank" href="http://workshop.chromeexperiments.com/stars/">
+              <img class="img img-circle" src="galaxy.png">
+              <h2>100,000 stars</h2>
+            </a>
+            <p class="lead">3D interactive tour of the galaxy created by some space enthusiasts at Google.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="marketing">
+      <div class="container">
+        <hr class="featurette-divider">
+        <h2 class="featurette-heading">Learn More</h2>
+        <p class="lead">This page only begins to scratch the surface of what is possible with WebGL and three.js.  Check out the full <a target="_blank" href="http://threejs.org/docs/">three.js documentation</a> for a complete reference.  <a target="_blank" href="http://fhtr.org/BasicsOfThreeJS/#1">Introduction to three.js</a> also gives a good overview for beginners.</p>
+      </div>
+    </div>
+    <div class="container marketing">
+      <hr class="featurette-divider">
+      <footer>
+        <p class="pull-right"><a target="_blank" href="#">Back to top</a></p>
+        <p>This page designed and built by <a href="https://github.com/msbarry" target="_blank">Michael Barry</a> for CS525D Data Visualization Course at WPI.</p>
+        <p><a href="http://getbootstrap.com/" target="_blank">bootstrap</a>, <a href="http://threejs.org/" target="_blank">three.js</a>, <a href="http://modernizr.com/" target="_blank">modernizr</a>, and <a href="http://jquery.com/" target="_blank">jquery</a> used under <a href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank">MIT</a> license.</p>
+      </footer>
+    </div>
+    <script type="text/javascript" src="bower_components/threejs/build/three.min.js"></script> 
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script> 
+    <script src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+    <script type="text/javascript" src="index.js"></script> 
+  </body>
+</html>

@@ -1,0 +1,159 @@
+body {
+  padding-bottom: 40px;
+}
+
+.top {
+  margin-bottom: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bs-header-after {
+  background-size: 100%;
+  background-image: url(population.png);
+  background-position: 50% 0px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -40px;
+  height: 200%;
+  z-index: -1;
+}
+
+.top .container {
+  height: 300px;
+  color: white;
+  position: relative;
+}
+
+.top-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+  padding-right: 15px;
+}
+
+.top-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.main-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+  margin-bottom: 40px;
+  font-size: 60px;
+}
+
+@media (max-width: 1024px) {
+  .bs-header-after {
+    background-size: 1024px;
+    background-position: 20% 0;
+  }
+
+  .main-heading {
+    font-size: 48px;
+  }
+}
+
+@media print {
+  #spinner,
+  #staticsphere,
+  #mydataviz,
+  .top,
+  canvas { display: none; }
+}
+
+
+@media (min-width: 992px) {
+  .right {
+    padding-left: 10%;
+  }
+
+  .left {
+    padding-right: 10%;
+  }
+
+  p.lead {
+    font-size: 18px;
+  }
+}
+
+#spinner,
+#staticsphere,
+#mydataviz {
+  min-height: 200px;
+  max-height: 200px;
+  clear: both;
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+}
+
+.no-webglenabled #spinner {
+  background-image: url(spinner.gif);
+}
+
+.no-webglenabled #staticsphere {
+  background-image: url(static.png);
+}
+
+.no-webglenabled #mydataviz {
+  /* TODO fallback */
+  /*background-image: url(mydataviz.png);*/
+}
+
+.webglenabled .not-capable,
+.no-webglenabled .webgl-capable {
+  display: none;
+}
+
+
+/* Pad the edges of the mobile views a bit */
+.marketing {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .col-lg-4 p {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+.featurette-divider {
+  margin: 40px 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+pre {
+  margin-top: 40px !important;
+}
+
+@media (min-width: 768px) {
+
+  .marketing {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
