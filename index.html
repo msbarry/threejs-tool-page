@@ -52,6 +52,8 @@
   &lt;head&gt;
     &lt;title&gt;Page Title&lt;/title&gt;
     &lt;style&gt;
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
       canvas { width: 100%; height: 100% }
     &lt;/style&gt;
   &lt;/head&gt;
@@ -68,7 +70,7 @@
     <div class="marketing">
       <div class="container featurette">
         <hr class="featurette-divider">
-        <div class="col-md-7 pull-right right">
+        <div class="col-md-7 right">
           <h2 class="featurette-heading">Setting Up the Scene</h2>
           <p class="lead">Before creating any objects in your visualization, you must first set up the scene, camera, and renderer. The <strong>scene</strong> is a generic container for the visualization which can optionally have "fog" that dims remote objects. The <strong>camera</strong> defines the aspect ratio and field of view as well as near and far clipping distances to avoid rendering objects that should not be visible.  You can also configure the camera's focal length in units that correspond to mm for a 35mm camera.</p>
           <p class="lead">Finally you need to create a <strong>renderer</strong> that will take the model you build and render it to the screen.  The WebGLRenderer uses hardware-accelerated WebGL.  The CanvasRenderer can be used if the browser does not support WebGL. The renderer provides the canvas DOM element for rendering that must be added to the page to see the visualization.</p>
@@ -90,6 +92,7 @@ document.body.appendChild(renderer.domElement);
 // set the background color to almost-white
 renderer.setClearColorHex(0xEEEEEE, 1.0);
 renderer.clear();</pre>
+        </div>
       </div>
     </div>
     <div class="marketing">
@@ -102,10 +105,10 @@ renderer.clear();</pre>
         </div>
         <div class="col-md-5">
           <pre class="prettyprint lang-js">
-// create a solid-grey sphere mesh composed of a geometry with radius 5 and 32 horizontal and vertical segments
+// create a solid-white sphere mesh composed of a geometry with radius 3 and 32 horizontal and vertical segments
 var cube = new THREE.Mesh(
-  new THREE.SphereGeometry(5, 32, 32),
-  new THREE.MeshLambertMaterial({color: 0x888888}));
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshLambertMaterial({color: 0xffffff}));
 scene.add(cube);
 
 // add a spotlight to the scene
@@ -119,7 +122,7 @@ scene.add(light);
     <div class="marketing">
       <div class="container featurette">
         <hr class="featurette-divider">
-        <div class="col-md-7 pull-right right">
+        <div class="col-md-7 right">
           <h2 class="featurette-heading">Rendering the Scene</h2>
           <p class="lead">Once the scene has been created and populated, you need to explicitly tell the browser to render it.  To render it once simply add <code>renderer.render(scene, animation)</code> to the end of your code.</p>
         </div>
@@ -161,9 +164,9 @@ animate(new Date().getTime());
     <div class="marketing">
       <div class="container featurette">
         <hr class="featurette-divider">
-        <div class="col-md-7 pull-right right">
+        <div class="col-md-7 right">
           <h2 class="featurette-heading">Putting it all together</h2>
-          <p class="lead">The finished product, complete with animation and lighting.</p>
+          <p class="lead">The finished product, complete with animation and lighting (or view <a href="sphere.html">full screen</a>).</p>
         </div>
         <div class="col-md-5">
           <div id="spinner"></div>
@@ -221,13 +224,15 @@ animate(new Date().getTime());
         <p class="lead">This page only begins to scratch the surface of what is possible with WebGL and three.js.  Check out the full <a target="_blank" href="http://threejs.org/docs/">three.js documentation</a> for a complete reference.  <a target="_blank" href="http://fhtr.org/BasicsOfThreeJS/#1">Introduction to three.js</a> also gives a good overview for beginners.</p>
       </div>
     </div>
-    <div class="container marketing">
-      <hr class="featurette-divider">
-      <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>This page designed and built by <a href="https://github.com/msbarry" target="_blank">Michael Barry</a> for CS525D Data Visualization Course at WPI.</p>
-        <p><a href="http://getbootstrap.com/" target="_blank">bootstrap</a>, <a href="http://threejs.org/" target="_blank">three.js</a>, <a href="http://modernizr.com/" target="_blank">modernizr</a>, and <a href="http://jquery.com/" target="_blank">jquery</a> used under <a href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank">MIT</a> license.</p>
-      </footer>
+    <div class="marketing">
+      <div class="container">
+        <hr class="featurette-divider">
+        <footer>
+          <p class="pull-right"><a href="#">Back to top</a></p>
+          <p>This page designed and built by <a href="https://github.com/msbarry" target="_blank">Michael Barry</a> for CS525D Data Visualization Course at WPI.</p>
+          <p><a href="http://getbootstrap.com/" target="_blank">bootstrap</a>, <a href="http://threejs.org/" target="_blank">three.js</a>, <a href="http://modernizr.com/" target="_blank">modernizr</a>, and <a href="http://jquery.com/" target="_blank">jquery</a> used under <a href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank">MIT</a> license.</p>
+        </footer>
+      </div>
     </div>
     <script type="text/javascript" src="bower_components/threejs/build/three.min.js"></script> 
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script> 

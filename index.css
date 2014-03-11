@@ -26,6 +26,15 @@ body {
   position: relative;
 }
 
+[class*=col] {
+  padding: 0;
+}
+
+.marketing {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 .top-right {
   position: absolute;
   bottom: 0;
@@ -71,25 +80,30 @@ body {
 @media (min-width: 992px) {
   .right {
     padding-left: 10%;
+    float: right;
   }
 
   .left {
     padding-right: 10%;
   }
 
-  p.lead {
-    font-size: 18px;
+  [class*=col-md] {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 
 #spinner,
 #staticsphere,
 #mydataviz {
-  min-height: 200px;
-  max-height: 200px;
   clear: both;
   background-position: 50% 0;
   background-repeat: no-repeat;
+  text-align: center;
+}
+
+canvas {
+  margin: 0 auto;
 }
 
 .no-webglenabled #spinner {
@@ -110,13 +124,6 @@ body {
   display: none;
 }
 
-
-/* Pad the edges of the mobile views a bit */
-.marketing {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
 /* Center align the text within the three columns below the carousel */
 .marketing .col-lg-4 {
   margin-bottom: 20px;
@@ -128,6 +135,10 @@ body {
 .marketing .col-lg-4 p {
   margin-right: 10px;
   margin-left: 10px;
+}
+
+footer p {
+  margin: 0;
 }
 
 
@@ -144,16 +155,20 @@ body {
 
 pre {
   margin-top: 40px !important;
+  font-size: 10px;
 }
 
 @media (min-width: 768px) {
 
-  .marketing {
-    padding-right: 0;
-    padding-left: 0;
-  }
-
   .featurette-heading {
     font-size: 50px;
+  }
+
+  p.lead {
+    font-size: 18px;
+  }
+
+  pre {
+    font-size: 12px;
   }
 }
