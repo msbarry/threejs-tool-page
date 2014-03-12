@@ -12,7 +12,9 @@ $(function () {
   }
 
   // code highlighting
-  window.prettyPrint();
+  if (window.prettyPrint) {
+    window.prettyPrint();
+  }
 
   if (Modernizr.webglenabled) {
     var width = 200;
