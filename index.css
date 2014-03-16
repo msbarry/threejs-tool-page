@@ -13,6 +13,7 @@ body {
   background-image: url(population.png);
   background-position: 50% 0px;
   background-repeat: no-repeat;
+  background-color: black;
   position: absolute;
   left: 0;
   right: 0;
