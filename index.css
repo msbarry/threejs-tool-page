@@ -12,6 +12,7 @@ body {
   background-size: 100%;
   background-image: url(population.png);
   background-position: 50% 0px;
+  background-repeat: no-repeat;
   position: absolute;
   left: 0;
   right: 0;
