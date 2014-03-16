@@ -4,10 +4,11 @@
     <style>
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      canvas { width: 100%; height: 100% }
+      canvas { width: 100%; height: 100%; position: absolute; top:0; z-index: 100; }
     </style>
   </head>
   <body>
+    <div id="warning">Your browser does not support this demo.  Please enable JavaScript and WebGL, or download a <a target="_blank" href="http://browsehappy.com">download a modern browser</a></div>
     <script src="bower_components/threejs/build/three.js"></script>
     <script>
 
@@ -55,6 +56,7 @@ function animate(t) {
 };
 animate(new Date().getTime());
 
+document.getElementById('warning').remove();
     </script>
   </body>
 </html>
