@@ -1,0 +1,15 @@
+{
+  "name": "prettify",
+  "_cacheHeaders": {
+    "ETag": "\"303//trunk/src/prettify.js\"",
+    "Last-Modified": "Wed, 26 Jun 2013 17:38:00 GMT",
+    "Content-Length": "63364",
+    "Content-Type": "text/javascript;charset=UTF-8"
+  },
+  "_release": "e-tag:303//trun",
+  "main": "index.js",
+  "_source": "http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js",
+  "_target": "*",
+  "_originalSource": "http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js",
+  "_direct": true
+}

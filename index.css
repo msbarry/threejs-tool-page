@@ -139,8 +139,13 @@ canvas {
   margin-left: 10px;
 }
 
-footer p {
+footer p.lead {
   margin: 0;
+  font-size: 14px;
+}
+
+footer .pull-right {
+  padding-left: 10px;
 }
 
 
