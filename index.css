@@ -74,6 +74,7 @@ body {
   #spinner,
   #staticsphere,
   #mydataviz,
+  #scatterplot,
   .top,
   canvas { display: none; }
 }
@@ -97,7 +98,8 @@ body {
 
 #spinner,
 #staticsphere,
-#mydataviz {
+#mydataviz,
+#scatterplot {
   clear: both;
   height: 200px;
   max-height: 200px;
@@ -118,6 +120,12 @@ canvas {
 .no-js #staticsphere,
 .no-webglenabled #staticsphere {
   background-image: url(static.png);
+}
+
+.no-js #scatterplot,
+.no-webglenabled #scatterplot,
+ #scatterplot  {
+  background-image: url(scatterplot.gif);
 }
 
 .webglenabled .not-capable,
